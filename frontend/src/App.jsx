@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
-const API_BASE = "http://localhost:8080";
+const API_BASE = "https://media-sequencer-mq31.onrender.com";
 
 function App() {
 const [windows, setWindows] = useState([]);
