@@ -1,14 +1,16 @@
 package store
 
 import (
-	"database/sql"
-	"fmt"
-	"sync"
-	"time"
+    "database/sql"
+    "fmt"
+    "os"
+    "path/filepath"
+    "sync"
+    "time"
 
-	_ "modernc.org/sqlite"
+    _ "modernc.org/sqlite"
 
-	"media-sequencer/backend/internal/model"
+    "media-sequencer/backend/internal/model"
 )
 
 type Store struct {
@@ -17,7 +19,15 @@ type Store struct {
 }
 
 func New(dbPath string) (*Store, error) {
-	db, err := sql.Open("sqlite", dbPath)
+    dir := filepath.Dir(dbPath)
+
+    if dir != "." {
+        if err := os.MkdirAll(dir, 0755); err != nil {
+            return nil, err
+        }
+    }
+
+    db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
 		return nil, err
 	}
